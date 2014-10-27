@@ -4,8 +4,21 @@ import urllib
 import urllib2
 import re
 
+def gen_search_in_university(url, url_values, keyword_re, return_found=True):
+    def search(ISBN):
+#        print url_values
+#        print url_values.format(ISBN=ISBN)
+        page = search_in_university(url, url_values.format(ISBN=ISBN))
+#        print page
+        if re.search(keyword_re, page):
+            return True if return_found is True else False
+        else:
+            return False if return_found is True else True
+    return search
+
 def search_in_university(url, url_values):
     full_url = url + '?' + url_values
+#    print full_url
     try: 
         resp = urllib2.urlopen(full_url)
         page = resp.read()
@@ -199,3 +212,30 @@ def search_in_DREXEL(ISBN):
         return False
     else:
         return True
+
+
+
+# 北卡羅萊納大學帕克分校  
+# University of North Carolina–Chapel Hill      		  
+# http://search.lib.unc.edu/search.jsp 
+
+search_UNC = gen_search_in_university('http://search.lib.unc.edu/search',\
+        'Ntt={ISBN}&Ntk=ISBN&Nty=1', 'Format.*\n.*Book', return_found=True)
+
+
+# 羅格斯大學新新伯朗士威分校  
+# Rutgers–New Brunswick       		 
+# http://www.libraries.rutgers.edu/
+
+RUTGERS_url = ('https://www-iris-rutgers-edu.proxy.libraries.rutgers.edu'
+               '/uhtbin/cgisirsi/0/0/0/123')
+
+values = ('?srchfield1=GENERAL^SUBJECT^GENERAL^^words%20anywhere&'
+          'searchdata1={ISBN}&library=ALL')
+
+search_RUTGERS = gen_search_in_university(RUTGERS_url, values, 
+                     'found no matches in any library', return_found=False)
+
+
+            
+
