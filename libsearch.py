@@ -14,6 +14,7 @@ def gen_search_in_university(url, url_values, keyword_re, return_found=True):
             return True if return_found is True else False
         else:
             return False if return_found is True else True
+
     return search
 
 def search_in_university(url, url_values):
