@@ -19,13 +19,9 @@ def gen_search_in_university(url, url_values, keyword_re, return_found=True):
 
 def search_in_university(url, url_values):
     full_url = url + '?' + url_values
-#    print full_url
-    try: 
-        resp = urllib2.urlopen(full_url)
-        page = resp.read()
-        return page
-    except:
-        return ''
+    resp = urllib2.urlopen(full_url)
+    page = resp.read()
+    return page
 
 
 def search_in_IU(ISBN):
@@ -42,14 +38,17 @@ def search_in_IU(ISBN):
     
     url_values = urllib.urlencode(data)
     full_url = url + '?' + url_values
-    resp = urllib2.urlopen(full_url)
-    page = resp.read()
-#    print page
-    
-    if re.search('No items found', page):
-        return False
-    else:
-        return True
+
+    try:
+        resp = urllib2.urlopen(full_url)
+        page = resp.read()
+        
+        if re.search('No items found', page):
+            return 'False'
+        else:
+            return 'True'
+    except:
+        return 'Error'
 
 def search_in_Illinois(ISBN):
     
@@ -68,14 +67,17 @@ def search_in_Illinois(ISBN):
 
     url_values = urllib.urlencode(data)
     full_url = url + '?' + url_values
-    resp = urllib2.urlopen(full_url)
-    page = resp.read()
-#    print page
-    
-    if page.find('did not match any resources') == -1:
-        return True
-    else:
-        return False
+
+    try:
+        resp = urllib2.urlopen(full_url)
+        page = resp.read()
+        
+        if page.find('did not match any resources') == -1:
+            return 'True'
+        else:
+            return 'False'
+    except:
+        return 'Error'
 
 def search_in_UW(ISBN):
     
@@ -91,14 +93,18 @@ def search_in_UW(ISBN):
             = ISBN)
 
     full_url = url + '?' + url_values
-    resp = urllib2.urlopen(full_url)
-    page = resp.read()
-#    print page
-    
-    if re.search('Available in the Library', page):
-        return True
-    else:
-        return False
+    try:
+        resp = urllib2.urlopen(full_url)
+        
+        page = resp.read()
+        
+        if re.search('Available in the Library', page):
+            return 'True'
+        else:
+            return 'False'
+
+    except:
+        return 'Error'
 
 def search_in_SYR(ISBN):
     '''
@@ -113,14 +119,19 @@ def search_in_SYR(ISBN):
 
 
     full_url = url + '?' + url_values
-    resp = urllib2.urlopen(full_url)
-    page = resp.read()
-#    print page
-    
-    if re.search(' Search resulted in no hits', page):
-        return False
-    else:
-        return True
+
+    try:
+        resp = urllib2.urlopen(full_url)
+        page = resp.read()
+    #    print page
+        
+        if re.search(' Search resulted in no hits', page):
+            return 'False'
+        else:
+            return 'True'
+
+    except:
+        return 'Error'
 
 
 def search_in_UMICH(ISBN):
@@ -134,12 +145,17 @@ def search_in_UMICH(ISBN):
     url_values =\
     'checkspelling=true&inst=all&showsearchonly=false&oft=false&lookfor={ISBN}&type=all&submit=Find&use_dismax=1'.format(ISBN=ISBN)
     page = search_in_university(url, url_values);
+
+    try:
     
-    #print page
-    if re.search('did not match any resources', page): 
-        return False
-    else:
-        return True
+        #print page
+        if re.search('did not match any resources', page): 
+            return 'False'
+        else:
+            return 'True'
+
+    except:
+        return 'Error'
 
 
 
@@ -152,11 +168,16 @@ def search_in_UTEXAS(ISBN):
     '''
     url = 'http://catalog.lib.utexas.edu/search/i' 
     url_values = 'SEARCH={ISBN}&searchscope=29&sortdropdown=-'.format(ISBN=ISBN)
-    page = search_in_university(url, url_values);
-    if re.search('No matches found', page):
-        return False
-    else:
-        return True
+
+    try:
+        page = search_in_university(url, url_values);
+        if re.search('No matches found', page):
+            return 'False'
+        else:
+            return 'True'
+
+    except:
+        return 'Error'
 
 
 
@@ -168,14 +189,16 @@ def search_in_IUB(ISBN):
     url = 'http://libraries.iub.edu/search/ebsco'
     url_values = 'keywords={ISBN}&type=AllFields&amount=brief'.format(ISBN=ISBN)
 
-    page = search_in_university(url, url_values)
-    #print page
+    try:
+        page = search_in_university(url, url_values)
+        #print page
 
-    if re.search('Your search did not match any resources.', page):
-        return False
-    else:
-        return True
-
+        if re.search('Your search did not match any resources.', page):
+            return False
+        else:
+            return True
+    except:
+        return 'Error'
 
 def search_in_SIMMONS(ISBN):
     '''
@@ -187,15 +210,19 @@ def search_in_SIMMONS(ISBN):
     url_values =\
     'keywords=sid=e3f8f555-2d6e-4fad-93a7-3ea51b803752%40sessionmgr198&vid=0&hid=123&bquery={ISBN}&bdata=JmNsaTA9RlQxJmNsdjA9WSZ0eXBlPTAmc2l0ZT1lZHMtbGl2ZSZzY29wZT1zaXRl'.format(ISBN=ISBN)
 
-    page = search_in_university(url, url_values)
-    #print page
+    try:
+        page = search_in_university(url, url_values)
+        #print page
 
-    if re.search('Your search did not match any resources.', page):
-        return False
-    elif re.search('<p class="caption">Book', page):
-        return True
-    else: 
-        return False
+        if re.search('Your search did not match any resources.', page):
+            return 'False'
+        elif re.search('<p class="caption">Book', page):
+            return 'True'
+        else: 
+            return 'False'
+
+    except:
+        return 'Error'
 
 def search_in_DREXEL(ISBN):
     '''
@@ -206,14 +233,16 @@ def search_in_DREXEL(ISBN):
     url_values = \
     'searchtype=i&searcharg={ISBN}&searchscope=9&SORT=D&extended=0&SUBMIT=Search&searchlimits=&searchorigarg=i{ISBN}'.format(ISBN=ISBN)
 
-    page = search_in_university(url, url_values)
+    try:
+        page = search_in_university(url, url_values)
 
-    #print page
-    if re.search('No matches found', page):
-        return False
-    else:
-        return True
-
+        #print page
+        if re.search('No matches found', page):
+            return False
+        else:
+            return True
+    except:
+        return 'Error'
 
 
 # 北卡羅萊納大學帕克分校  

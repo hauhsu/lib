@@ -44,17 +44,15 @@ def search_in_universities(row):
     in all schools, appending the result then 
     return
     '''
-#    row.append( search_in_IU(row [ISBN_idx]) )
-#    row.append( search_in_Illinois(row [ISBN_idx]) )
-#    row.append( search_in_UW(row [ISBN_idx]) )
-#    row.append( search_in_SYR(row [ISBN_idx]) )
-#    row.append( search_in_UMICH(row [ISBN_idx]) )
-#    row.append( search_in_UTEXAS(row [ISBN_idx]) )
-#    row.append( search_in_IUB(row [ISBN_idx]) )
-#    row.append( search_in_SIMMONS(row [ISBN_idx]) )
-#    row.append( search_in_DREXEL(row [ISBN_idx]) )
+    row.append( search_in_IU(row [ISBN_idx]) )
+    row.append( search_in_Illinois(row [ISBN_idx]) )
+    row.append( search_in_UW(row [ISBN_idx]) )
+    row.append( search_in_SYR(row [ISBN_idx]) )
+    row.append( search_in_UMICH(row [ISBN_idx]) )
+    row.append( search_in_UTEXAS(row [ISBN_idx]) )
+    row.append( search_in_SIMMONS(row [ISBN_idx]) )
+    row.append( search_in_DREXEL(row [ISBN_idx]) )
     row.append( search_UNC(row[ISBN_idx]) ) 
-#    row.append( search_RUTGERS(row[ISBN_idx]) ) 
     return row
 
 def main():
@@ -71,7 +69,7 @@ def main():
         writer = csv.writer(outfile)
         
         threads = []
-        for i in range(4):
+        for i in range(20):
             threads.append(searchThread(i))
             threads[i].start() 
 
